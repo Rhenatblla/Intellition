@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Search.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Intellition</h1>
+        <ul id="sidebar-menu">
+            <li data-page="dashboard.html">Dashboard</li>
+            <li data-page="dataentry.html">Data Entry</li>
+            <li data-page="modeldata.html" class="active">Model Data</li>
+            <li class="has-dropdown">
+                Request
+                <ul class="dropdown">
+                    <li data-page="requestdataset.html">Request Dataset</li>
+                    <li data-page="confirmation.html">Confirmation</li>
+                    <li data-page="history.html">History</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="logout" data-page="login.html">Logout</div>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <div class="search">
+                <img src="search-removebg-preview.png" alt="Search" width="24" height="24">
+                <input type="text" id="search-input" placeholder="Search...">
+            </div>
+            <div class="profile">
+                <div>Hai, Admin</div>
+                <img src="icon_profil-removebg-preview.png" alt="Profile" id="profile-pic">
+                <div class="popup" id="profile-popup">
+                    <button id="update-profile-btn">Profile</button>
+                </div>
+            </div>
+        </div>
+        <div class="cards-container" id="cards-container">
+            <div class="card">
+                <img src="Rumahh.jpg" alt="Prediksi Harga Rumah">
+                <h4>Prediksi Harga Rumah</h4>
+                <p>Prediksi</p>
+            </div>
+            <div class="card">
+                <img src="Customer.jpg" alt="Customer Behaviour">
+                <h4>Customer Behaviour</h4>
+                <p>Klasifikasi</p>
+            </div>
+            <div class="card">
+                <img src="weather.jpg" alt="Weather Forecasting">
+                <h4>Weather Forecasting</h4>
+                <p>Prediksi</p>
+            </div>
+            <div class="card">
+                <img src="Virus.jpg" alt="Disease Detection">
+                <h4>Disease Detection</h4>
+                <p>Klasifikasi</p>
+            </div>
+            <div class="card">
+                <img src="sentimen.png" alt="Sentiment Analysis">
+                <h4>Sentiment Analysis</h4>
+                <p>Klasifikasi</p>
+            </div>
+            <div class="card">
+                <img src="mobil.jpg" alt="Prediksi Harga Mobil">
+                <h4>Prediksi Harga Mobil</h4>
+                <p>Prediksi</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebarMenu = document.getElementById("sidebar-menu");
+            const dropdown = document.querySelector(".has-dropdown");
+            const subMenu = dropdown.querySelector(".dropdown");
+
+            dropdown.addEventListener("click", () => {
+                subMenu.classList.toggle("open");
+                dropdown.classList.toggle("active-menu");
+            });
+
+            sidebarMenu.addEventListener("click", (e) => {
+                if (e.target.tagName === "LI" && e.target.dataset.page) {
+                    sidebarMenu.querySelectorAll("li").forEach((li) => li.classList.remove("active-menu", "active-submenu"));
+                    if (e.target.closest(".has-dropdown")) {
+                        dropdown.classList.add("active-menu");
+                        e.target.classList.add("active-submenu");
+                    } else {
+                        e.target.classList.add("active-menu");
+                    }
+                    window.location.href = e.target.dataset.page;
+                }
+            });
+
+            const logoutButton = document.querySelector(".logout");
+            logoutButton.addEventListener("click", () => {
+                window.location.href = logoutButton.dataset.page;
+            });
+
+            const profilePic = document.getElementById('profile-pic');
+            const profilePopup = document.getElementById('profile-popup');
+
+            profilePic.addEventListener('click', () => {
+                profilePopup.style.display = profilePopup.style.display === 'block' ? 'none' : 'block';
+            });
+
+            const searchInput = document.getElementById('search-input');
+            const cardsContainer = document.getElementById('cards-container');
+            const cards = Array.from(cardsContainer.getElementsByClassName('card'));
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                cards.forEach(card => {
+                    const title = card.getElementsByTagName('h4')[0].innerText.toLowerCase();
+                    const category = card.getElementsByTagName('p')[0].innerText.toLowerCase();
+                    if (title.includes(query) || category.includes(query)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>
